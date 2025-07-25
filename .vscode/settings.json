@@ -1,0 +1,14 @@
+{
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": ".*",
+                "cmd": "npx prettier-eslint ${file} --write"
+            }
+        ]
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "package.json": "pnpm-*.yaml, .nvmrc, LICENSE, .gitignore"
+    }
+}
