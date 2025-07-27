@@ -8,10 +8,11 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { injectOrFail } from '@noeldemartin/vue-modals/lib/_internals/vue';
-import type { ModalInternals } from '@noeldemartin/vue-modals/lib/_internals/modals';
+import { useModalInternals } from '@noeldemartin/vue-modals/_internals/composition';
 
-const modal = injectOrFail<ModalInternals>('modal');
+const modal = useModalInternals();
+
+modal.controlled = true;
 
 onMounted(() => (modal.visible.value = true));
 </script>
