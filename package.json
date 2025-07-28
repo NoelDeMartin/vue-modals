@@ -4,8 +4,14 @@
     "type": "module",
     "sideEffects": false,
     "exports": {
-        "types": "./dist/noeldemartin-vue-modals.d.ts",
-        "default": "./dist/noeldemartin-vue-modals.js"
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./primevue": {
+            "types": "./dist/primevue.d.ts",
+            "default": "./dist/primevue.js"
+        }
     },
     "files": [
         "src",
@@ -25,7 +31,7 @@
         "vue": "*"
     },
     "dependencies": {
-        "@noeldemartin/utils": "^0.7.1"
+        "@noeldemartin/utils": "next"
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.2",
@@ -39,6 +45,7 @@
         "@vue/tsconfig": "^0.7.0",
         "eslint": "^8.57.1",
         "prettier-eslint-cli": "^8.0.1",
+        "primevue": "^4.3.6",
         "publint": "^0.3.12",
         "typescript": "^5.8.3",
         "vite": "^7.0.4",

@@ -50,11 +50,97 @@ Given that modals can also be dismissed, the payload from the `close` event won'
 
 ```ts
 defineEmits<{ close: [{ answer: string }] }>();
-// 👆 showModal return will be a Promise<{ dismissed: false; answer: string } | { dismissed: true; answer?: undefined }>
+// 👆 showModal will return a Promise<{ dismissed: false; answer: string } | { dismissed: true; answer?: undefined }>
 
 defineEmits<{ close: [string] }>();
-// 👆 showModal return will be a Promise<{ dismissed: false; response: string } | { dismissed: true; response?: undefined }>
+// 👆 showModal will return a Promise<{ dismissed: false; response: string } | { dismissed: true; response?: undefined }>
 
 defineEmits<{ somethingElse: [] }>();
-// 👆 showModal return will be a Promise<{ dismissed: boolean }>
+// 👆 showModal will return a Promise<{ dismissed: boolean }>
+```
+
+### Customizing modals
+
+If you want to have an overlay that sits behind your modals, you can use the `overlay` slot in the `<ModalsPortal>`. You can also style the modals container passing class or style attributes, and use `<Transition>` to implement animations:
+
+```html
+<ModalsPortal class="fixed inset-0 flex items-center justify-center pointer-events-none">
+    <template #overlay="{ show }">
+        <Transition
+            enter-active-class="transition-opacity duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition-opacity duration-300"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+        >
+            <div v-if="show" class="fixed inset-0 bg-gray-500/75" />
+        </Transition>
+    </template>
+</ModalsPortal>
+```
+
+Modals don't need to use any special components, so they can be simple divs:
+
+```html
+<div class="bg-white p-4 rounded-lg shadow-lg z-10 pointer-events-auto">
+    <p>My modal content</p>
+</div>
+```
+
+However, if you also want to configure some animations, you can use the `<Modal>` component and pass the same attributes used in the `<Transition>` component:
+
+```html
+<Modal
+    enter-active-class="transition-all duration-300"
+    enter-from-class="opacity-0 scale-95"
+    enter-to-class="opacity-100 scale-100"
+    leave-active-class="transition-all duration-300"
+    leave-from-class="opacity-100 scale-100"
+    leave-to-class="opacity-0 scale-95"
+    class="bg-white p-4 rounded-lg shadow-lg z-10 pointer-events-auto"
+>
+    <p>My modal content</p>
+</Modal>
+```
+
+Finally, if you want to create your own modal wrapper, you can use `useModal()`. This will expose a couple of utilities you can use to work with the modal. If you pass the `{ controlled: true }` option, the modal won't be removed from the DOM until you call `onHide` and `onAfterHide` hooks. Combined with the `visible` ref and using the native `<Transition>`, you can achieve the same result as the `<Modal>` component to customize it on your own:
+
+```vue
+<template>
+    <Transition @before-leave="modal.onHide" @after-leave="modal.onAfterHide">
+        <div v-if="modal.visible.value">
+            <slot :close="modal.close" />
+        </div>
+    </Transition>
+</template>
+
+<script setup lang="ts">
+import { useModal } from '@noeldemartin/vue-modals';
+
+const modal = useModal({ controlled: true });
+</script>
+```
+
+However, keep in mind that if you're going to work with modals this way, you'll need to implement all the accessibility functionality on your own (focus trapping, keyboard events, etc.). Instead, you'll be better off integrating with an existing component library.
+
+### Third-party integrations
+
+In order to use this with component libraries, you'll need to follow similar techniques from the ones described in the previous section.
+
+These are some of the built-in integrations, feel free to look at the [src/integrations/](./src/integrations/) folder to learn more about them.
+
+#### PrimeVue
+
+```vue
+<template>
+    <Modal title="My Awesome Modal">
+        <p>My modal content</p>
+    </Modal>
+</template>
+
+<script setup lang="ts">
+import Button from 'primevue/button';
+import { Modal } from '@noeldemartin/vue-modals/primevue';
+</script>
 ```

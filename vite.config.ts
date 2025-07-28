@@ -8,12 +8,21 @@ export default defineConfig({
     build: {
         sourcemap: true,
         lib: {
-            entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
+            entry: {
+                index: fileURLToPath(new URL('./src/core/index.ts', import.meta.url)),
+                primevue: fileURLToPath(new URL('./src/integrations/primevue/index.ts', import.meta.url)),
+            },
             formats: ['es'],
-            fileName: 'noeldemartin-vue-modals',
+            fileName: (_, entry) => {
+                if (entry.includes('primevue')) {
+                    return 'primevue.js';
+                }
+
+                return 'index.js';
+            },
         },
         rollupOptions: {
-            external: ['@noeldemartin/utils', 'vue'],
+            external: ['@noeldemartin/utils', 'vue', 'primevue/dialog'],
         },
     },
     plugins: [
@@ -26,7 +35,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@noeldemartin/vue-modals': fileURLToPath(new URL('./src/', import.meta.url)),
+            '@noeldemartin/vue-modals': fileURLToPath(new URL('./src/core/', import.meta.url)),
         },
     },
 });

@@ -7,12 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useModalInternals } from '@noeldemartin/vue-modals/_internals/composition';
+import { useModal } from '@noeldemartin/vue-modals/composition';
 
-const modal = useModalInternals();
-
-modal.controlled = true;
-
-onMounted(() => (modal.visible.value = true));
+const modal = useModal({ controlled: true });
 </script>

@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
-import { type GetModalResponse } from '@noeldemartin/vue-modals/controls';
 import { type Expect, tt } from '@noeldemartin/testing';
+import { type GetModalResponse } from './controls';
 import type { Constructor, Equals } from '@noeldemartin/utils';
 import type { Component } from 'vue';
 

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@noeldemartin/utils':
-        specifier: ^0.7.1
-        version: 0.7.1
+        specifier: next
+        version: 0.7.1-next.1d773c8a8bb25494976809bee0d970c7341e0342
     devDependencies:
       '@arethetypeswrong/cli':
         specifier: ^0.18.2
@@ -45,6 +45,9 @@ importers:
       prettier-eslint-cli:
         specifier: ^8.0.1
         version: 8.0.1(prettier-eslint@16.4.2(typescript@5.8.3))(typescript@5.8.3)
+      primevue:
+        specifier: ^4.3.6
+        version: 4.3.6(vue@3.5.18(typescript@5.8.3))
       publint:
         specifier: ^0.3.12
         version: 0.3.12
@@ -381,12 +384,33 @@ packages:
   '@noeldemartin/utils@0.7.0-next.928e77e4d67adf7b9e4e1c5387f321ecfe3b11ca':
     resolution: {integrity: sha512-rP/sbx+ifnKVJpLhmok0uYvuWEerPzm2onN8l+VYrPkGPMqsFSPUsKSbID9PMVYbIQ52CZFekijIvF5Fkc/42Q==}
 
-  '@noeldemartin/utils@0.7.1':
-    resolution: {integrity: sha512-RLXifg+/jmPpSWBzqen/e4QxwrCSnAOmGARvpICwuF9Af9sIfiL3wG9ietjtX8QNHyd1L99oKhzxnsyoXBG3jg==}
+  '@noeldemartin/utils@0.7.1-next.1d773c8a8bb25494976809bee0d970c7341e0342':
+    resolution: {integrity: sha512-d/3QorEfGCGW5PUWUF+Xhf5Gmqt2z9q622MX5wG0ICeTy+eN/sfNpoBfCq7jS1JON7x5XCotAVY6H8ckZCpaow==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@primeuix/styled@0.7.0':
+    resolution: {integrity: sha512-xUqMdQb75izeDkNWFK1QlU15aUl5LIU97Fq68IXOhrqqLsKEBnj5ftntFZrENQW70jAHwALdWP4EOGi/poc9Tg==}
+    engines: {node: '>=12.11.0'}
+
+  '@primeuix/styles@1.2.1':
+    resolution: {integrity: sha512-Tri7pPgZgxrVmhJG8ijZZFolQ6vu27xnkGoAB9EFY8YlaKTM5iqkWzEcqdxy2KmgFWMXi+BrPHwO0RdQ6JCT+g==}
+
+  '@primeuix/utils@0.6.0':
+    resolution: {integrity: sha512-ULpB87ImNAiX36OMtyDeRceWB7N/mVlh6gGLqp/lx8UMKZlLIQH/UAFND86hYXHwNpXeNKcWfMGreb0Oc0hcZA==}
+    engines: {node: '>=12.11.0'}
+
+  '@primevue/core@4.3.6':
+    resolution: {integrity: sha512-ZuP0gqpEbIkpz9Em/O4Du+fRj0qyOl2YYuxhlELAtRg8+YkMsSJDd2ai2GM623sYRWOIwMr5rWevZGB1WqukzQ==}
+    engines: {node: '>=12.11.0'}
+    peerDependencies:
+      vue: ^3.5.0
+
+  '@primevue/icons@4.3.6':
+    resolution: {integrity: sha512-QVFmfikMpo4/DObMSbB5kS8MH1OoQrx8N9prEZaMvfFzD3hixxK24l2VrcS5x5/0NnP3szwZwTCmEAutCygX6A==}
+    engines: {node: '>=12.11.0'}
 
   '@publint/pack@0.1.2':
     resolution: {integrity: sha512-S+9ANAvUmjutrshV4jZjaiG8XQyuJIZ8a4utWmN/vW1sgQ9IfBnPndwkmQYw53QmouOIytT874u65HEmu6H5jw==}
@@ -685,11 +709,20 @@ packages:
   '@volar/language-core@2.4.20':
     resolution: {integrity: sha512-dRDF1G33xaAIDqR6+mXUIjXYdu9vzSxlMGfMEwBxQsfY/JMUEXSpLTR057oTKlUQ2nIvCmP9k94A8h8z2VrNSA==}
 
+  '@volar/language-core@2.4.22':
+    resolution: {integrity: sha512-gp4M7Di5KgNyIyO903wTClYBavRt6UyFNpc5LWfyZr1lBsTUY+QrVZfmbNF2aCyfklBOVk9YC4p+zkwoyT7ECg==}
+
   '@volar/source-map@2.4.20':
     resolution: {integrity: sha512-mVjmFQH8mC+nUaVwmbxoYUy8cww+abaO8dWzqPUjilsavjxH0jCJ3Mp8HFuHsdewZs2c+SP+EO7hCd8Z92whJg==}
 
+  '@volar/source-map@2.4.22':
+    resolution: {integrity: sha512-L2nVr/1vei0xKRgO2tYVXtJYd09HTRjaZi418e85Q+QdbbqA8h7bBjfNyPPSsjnrOO4l4kaAo78c8SQUAdHvgA==}
+
   '@volar/typescript@2.4.20':
     resolution: {integrity: sha512-Oc4DczPwQyXcVbd+5RsNEqX6ia0+w3p+klwdZQ6ZKhFjWoBP9PCPQYlKYRi/tDemWphW93P/Vv13vcE9I9D2GQ==}
+
+  '@volar/typescript@2.4.22':
+    resolution: {integrity: sha512-6ZczlJW1/GWTrNnkmZxJp4qyBt/SGVlcTuCWpI5zLrdPdCZsj66Aff9ZsfFaT3TyjG8zVYgBMYPuCm/eRkpcpQ==}
 
   '@vue/compiler-core@3.5.18':
     resolution: {integrity: sha512-3slwjQrrV1TO8MoXgy3aynDQ7lslj5UqDxuHnrzHtpON5CBinhWjJETciPngpin/T3OuW3tXUf86tEurusnztw==}
@@ -1544,6 +1577,10 @@ packages:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
+  primevue@4.3.6:
+    resolution: {integrity: sha512-Wwg2dH6pBmOdkj9L/OnrCQf9AKPHfY5CcfnDyWeh0tNlR+XjYKGl8qvMdJOvGO9jjg6UdsX5MSaU8vDDsSG+sg==}
+    engines: {node: '>=12.11.0'}
+
   publint@0.3.12:
     resolution: {integrity: sha512-1w3MMtL9iotBjm1mmXtG3Nk06wnq9UhGNRpQ2j6n1Zq7YAD6gnxMMZMIxlRPAydVjVbjSm+n0lhwqsD1m4LD5w==}
     engines: {node: '>=18'}
@@ -2281,12 +2318,35 @@ snapshots:
     dependencies:
       idb: 8.0.3
 
-  '@noeldemartin/utils@0.7.1':
+  '@noeldemartin/utils@0.7.1-next.1d773c8a8bb25494976809bee0d970c7341e0342':
     dependencies:
       idb: 8.0.3
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@primeuix/styled@0.7.0':
+    dependencies:
+      '@primeuix/utils': 0.6.0
+
+  '@primeuix/styles@1.2.1':
+    dependencies:
+      '@primeuix/styled': 0.7.0
+
+  '@primeuix/utils@0.6.0': {}
+
+  '@primevue/core@4.3.6(vue@3.5.18(typescript@5.8.3))':
+    dependencies:
+      '@primeuix/styled': 0.7.0
+      '@primeuix/utils': 0.6.0
+      vue: 3.5.18(typescript@5.8.3)
+
+  '@primevue/icons@4.3.6(vue@3.5.18(typescript@5.8.3))':
+    dependencies:
+      '@primeuix/utils': 0.6.0
+      '@primevue/core': 4.3.6(vue@3.5.18(typescript@5.8.3))
+    transitivePeerDependencies:
+      - vue
 
   '@publint/pack@0.1.2': {}
 
@@ -2594,11 +2654,23 @@ snapshots:
     dependencies:
       '@volar/source-map': 2.4.20
 
+  '@volar/language-core@2.4.22':
+    dependencies:
+      '@volar/source-map': 2.4.22
+
   '@volar/source-map@2.4.20': {}
+
+  '@volar/source-map@2.4.22': {}
 
   '@volar/typescript@2.4.20':
     dependencies:
       '@volar/language-core': 2.4.20
+      path-browserify: 1.0.1
+      vscode-uri: 3.1.0
+
+  '@volar/typescript@2.4.22':
+    dependencies:
+      '@volar/language-core': 2.4.22
       path-browserify: 1.0.1
       vscode-uri: 3.1.0
 
@@ -2639,7 +2711,7 @@ snapshots:
 
   '@vue/language-core@2.2.0(typescript@5.8.3)':
     dependencies:
-      '@volar/language-core': 2.4.20
+      '@volar/language-core': 2.4.22
       '@vue/compiler-dom': 3.5.18
       '@vue/compiler-vue2': 2.7.16
       '@vue/shared': 3.5.18
@@ -3489,6 +3561,16 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 18.3.1
 
+  primevue@4.3.6(vue@3.5.18(typescript@5.8.3)):
+    dependencies:
+      '@primeuix/styled': 0.7.0
+      '@primeuix/styles': 1.2.1
+      '@primeuix/utils': 0.6.0
+      '@primevue/core': 4.3.6(vue@3.5.18(typescript@5.8.3))
+      '@primevue/icons': 4.3.6(vue@3.5.18(typescript@5.8.3))
+    transitivePeerDependencies:
+      - vue
+
   publint@0.3.12:
     dependencies:
       '@publint/pack': 0.1.2
@@ -3742,7 +3824,7 @@ snapshots:
     dependencies:
       '@microsoft/api-extractor': 7.52.9(@types/node@24.1.0)
       '@rollup/pluginutils': 5.2.0(rollup@4.46.0)
-      '@volar/typescript': 2.4.20
+      '@volar/typescript': 2.4.22
       '@vue/language-core': 2.2.0(typescript@5.8.3)
       compare-versions: 6.1.1
       debug: 4.4.1
