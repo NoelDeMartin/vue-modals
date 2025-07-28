@@ -80,6 +80,13 @@ If you want to have an overlay that sits behind your modals, you can use the `ov
 </ModalsPortal>
 ```
 
+By default, modals will be rendered one after another in the DOM. However, some libraries may require to nest them (such as [Reka UI](https://reka-ui.com/docs/components/dialog#nested-dialog)). In that case, you can use the `nested` attribute to indicate that the rendering of child modals will happen in each modal component, rather than the root:
+
+```vue
+<!-- This will only render the first active modal -->
+<ModalsPortal nested />
+```
+
 Modals don't need to use any special components, so they can be simple divs:
 
 ```html
@@ -122,6 +129,8 @@ const modal = useModal({ controlled: true });
 </script>
 ```
 
+With this, you can also access `modal.child.value` in order to render nested modals.
+
 However, keep in mind that if you're going to work with modals this way, you'll need to implement all the accessibility functionality on your own (focus trapping, keyboard events, etc.). Instead, you'll be better off integrating with an existing component library.
 
 ### Third-party integrations
@@ -132,9 +141,11 @@ These are some of the built-in integrations, feel free to look at the [src/integ
 
 #### PrimeVue
 
+You can use the `<ModalsPortal>` component as usual, but import `<Modal>` from `@noeldemartin/vue-modals/primevue` instead. Attributes will be passed down to PrimeVue's native [`<Dialog>`](https://primevue.org/dialog/#api.dialog.props) component, such as `header`, `footer`, `maximizable`, etc.
+
 ```vue
 <template>
-    <Modal title="My Awesome Modal">
+    <Modal header="My Awesome Modal">
         <p>My modal content</p>
     </Modal>
 </template>
@@ -142,5 +153,87 @@ These are some of the built-in integrations, feel free to look at the [src/integ
 <script setup lang="ts">
 import Button from 'primevue/button';
 import { Modal } from '@noeldemartin/vue-modals/primevue';
+</script>
+```
+
+#### Shadcn
+
+Following Shadcn's philosophy, this library doesn't contain any code to integrate with the library. Instead, you'll want to copy & paste these into your project:
+
+`src/components/ui/modal/Modal.vue`
+
+```vue
+<template>
+    <Dialog :open="modal.visible.value" @update:open="updateOpenState($event)">
+        <DialogContent>
+            <slot />
+
+            <ModalContext v-if="modal.child.value" :controller="modal.child.value">
+                <component
+                    :is="modal.child.value.component"
+                    v-bind="modal.child.value.props"
+                    @close="modal.child.value.close($event)"
+                />
+            </ModalContext>
+        </DialogContent>
+    </Dialog>
+</template>
+
+<script setup lang="ts">
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useModal, ModalContext } from '@noeldemartin/vue-modals';
+
+const modal = useModal({ controlled: true });
+
+async function updateOpenState(open: boolean) {
+    if (open) {
+        return;
+    }
+
+    modal.close();
+    modal.visible.value = false;
+    modal.onHide();
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    modal.onAfterHide();
+}
+</script>
+```
+
+`src/components/ui/modal/ModalsPortal.vue`
+
+```vue
+<template>
+    <ModalsPortal nested />
+</template>
+
+<script setup lang="ts">
+import { ModalsPortal } from '@noeldemartin/vue-modals';
+</script>
+```
+
+`src/components/ui/index.ts`
+
+```ts
+export { default as Modal } from './Modal.vue';
+export { default as ModalsPortal } from './ModalsPortal.vue';
+```
+
+Once that is set up, you should be able to create modals like this:
+
+```vue
+<template>
+    <Modal>
+        <DialogHeader>
+            <DialogTitle>My Awesome Modal</DialogTitle>
+        </DialogHeader>
+        <p>Modal content goes here</p>
+    </Modal>
+</template>
+
+<script setup lang="ts">
+import { Modal } from '@/components/ui/modal';
+import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 </script>
 ```

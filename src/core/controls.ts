@@ -1,5 +1,5 @@
-import { ref } from 'vue';
-import { modals } from '@noeldemartin/vue-modals/state';
+import { ref, shallowRef } from 'vue';
+import { type ModalController, modals } from '@noeldemartin/vue-modals/state';
 import { type Constructor, type IsAny, type Pretty, PromisedValue, isObject, uuid } from '@noeldemartin/utils';
 import type { Component } from 'vue';
 
@@ -30,9 +30,10 @@ export function showModal<T extends Component>(
     componentProps?: GetModalProps<T>,
 ): Promise<GetModalResponse<T>> {
     const id = uuid();
+    const props = componentProps ?? {};
     const controlled = ref(false);
     const visible = ref(false);
-    const props = componentProps ?? {};
+    const child = shallowRef<ModalController | null>(null);
     const promisedHidden = new PromisedValue<void>();
     const promisedResult = new PromisedValue<GetModalResponse<T>>();
 
@@ -64,21 +65,40 @@ export function showModal<T extends Component>(
             await close();
         }
 
+        const index = modals.value.findIndex((modal) => modal.id === id);
+
+        if (index !== -1) {
+            return;
+        }
+
+        const parentModal = modals.value[index - 1];
+
+        if (parentModal) {
+            parentModal.child.value = modals.value[index]?.child.value ?? null;
+        }
+
         modals.value = modals.value.filter((modal) => modal.id !== id);
     };
 
-    modals.value = modals.value.concat([
-        {
-            id,
-            component,
-            props,
-            visible,
-            controlled,
-            close,
-            onHide,
-            onAfterHide,
-        },
-    ]);
+    const modal = {
+        id,
+        component,
+        props,
+        controlled,
+        visible,
+        child,
+        close,
+        onHide,
+        onAfterHide,
+    } satisfies ModalController;
+
+    const topModal = modals.value[modals.value.length - 1];
+
+    if (topModal) {
+        topModal.child.value = modal;
+    }
+
+    modals.value = modals.value.concat([modal]);
 
     return promisedResult;
 }

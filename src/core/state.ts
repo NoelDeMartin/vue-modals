@@ -7,6 +7,7 @@ export interface ModalController<T extends object = never> {
     props: Record<string, unknown>;
     controlled: Ref<boolean>;
     visible: Ref<boolean>;
+    child: Ref<ModalController | null>;
     close(payload?: T): Promise<void>;
     onHide(): void;
     onAfterHide(): void;
