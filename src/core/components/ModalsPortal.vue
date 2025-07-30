@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :data-open="modals.length ? 'true' : undefined">
         <slot name="overlay" :show="modals.length > 0" />
         <ModalComponent v-if="!nested" v-for="modal of modals" :key="modal.id" :is="modal" />
         <ModalComponent v-else-if="modals[0]" :is="modals[0]" />
