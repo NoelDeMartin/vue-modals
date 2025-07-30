@@ -1,6 +1,6 @@
 <template>
-    <Dialog v-model:visible="modal.visible.value" modal @hide="modal.onHide" @after-hide="modal.onAfterHide">
-        <slot :close="modal.close" />
+    <Dialog v-model:visible="visible" modal @after-hide="remove()">
+        <slot :close />
     </Dialog>
 </template>
 
@@ -8,5 +8,5 @@
 import Dialog from 'primevue/dialog';
 import { useModal } from '@noeldemartin/vue-modals';
 
-const modal = useModal({ controlled: true });
+const { visible, close, remove } = useModal({ removeOnClose: false });
 </script>

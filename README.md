@@ -16,11 +16,11 @@ First, install it using your favorite package manager:
 pnpm add @noeldemartin/vue-modals
 ```
 
-Then, make sure to place a `<ModalsPortal>` somewhere within your app (wherever you want modals to render).
+Then, place a `<ModalsPortal>` somewhere within your app (wherever you want to render modals).
 
-Finally, you should be able to open modals like this:
+Finally, open modals like this:
 
-```ts
+```js
 import { showModal } from '@noeldemartin/vue-modals';
 import MyModal from './MyModal.vue';
 
@@ -44,19 +44,25 @@ defineProps<{ question: string }>();
 </script>
 ```
 
+```ts
+const { answer } = await showModal(MyModal, { question: 'How many golf balls fit into a Boeing 747?' });
+// 👆 answer will be typed as `string | undefined` (in case the modal is dismissed)
+// 👆 showModal's second argument will be typed as `{ question: string }`
+```
+
 ### Modal responses
 
 Given that modals can also be dismissed, the payload from the `close` event won't be directly returned in the promise. Instead, it will be merged into an object with a `dismissed` boolean:
 
 ```ts
 defineEmits<{ close: [{ answer: string }] }>();
-// 👆 showModal will return a Promise<{ dismissed: false; answer: string } | { dismissed: true; answer?: undefined }>
+// 👆 showModal will return `Promise<{ dismissed: false; answer: string } | { dismissed: true; answer?: undefined }>`
 
 defineEmits<{ close: [string] }>();
-// 👆 showModal will return a Promise<{ dismissed: false; response: string } | { dismissed: true; response?: undefined }>
+// 👆 showModal will return `Promise<{ dismissed: false; response: string } | { dismissed: true; response?: undefined }>`
 
 defineEmits<{ somethingElse: [] }>();
-// 👆 showModal will return a Promise<{ dismissed: boolean }>
+// 👆 showModal will return `Promise<{ dismissed: boolean }>`
 ```
 
 ### Customizing modals
@@ -111,33 +117,53 @@ However, if you also want to configure some animations, you can use the `<Modal>
 </Modal>
 ```
 
-Finally, if you want to create your own modal wrapper, you can use `useModal()`. This will expose a couple of utilities you can use to work with the modal. If you pass the `{ controlled: true }` option, the modal won't be removed from the DOM until you call `onHide` and `onAfterHide` hooks. Combined with the `visible` ref and using the native `<Transition>`, you can achieve the same result as the `<Modal>` component to customize it on your own:
+Finally, if you want to create your own modal wrapper, you can use `useModal()`. This will expose a couple of utilities you can use to work with the modal. By default, modals are removed from the down when closed, but you can pass the `{ removeOnClose: false }` option to disable it. If you do, make sure to call `remove()` to remove it yourself. Combined with `visible`, and using the native `<Transition>`, you can achieve the same result as the `<Modal>` component to customize it on your own:
 
 ```vue
 <template>
-    <Transition @before-leave="modal.onHide" @after-leave="modal.onAfterHide">
-        <div v-if="modal.visible.value">
-            <slot :close="modal.close" />
+    <Transition @after-leave="remove()">
+        <div v-if="visible">
+            <slot :close />
         </div>
     </Transition>
 </template>
 
 <script setup lang="ts">
-import { useModal } from '@noeldemartin/vue-modals';
+import { useModal } from '@noeldemartin/vue-modals/composition';
 
-const modal = useModal({ controlled: true });
+const { visible, close, remove } = useModal({ removeOnClose: false });
 </script>
 ```
 
-With this, you can also access `modal.child.value` in order to render nested modals.
+You can also use `child` if you want to render nested modals using the `<ModalComponent>`:
 
-However, keep in mind that if you're going to work with modals this way, you'll need to implement all the accessibility functionality on your own (focus trapping, keyboard events, etc.). Instead, you'll be better off integrating with an existing component library.
+```vue
+<template>
+    <Transition @after-leave="remove()">
+        <div v-if="visible">
+            <slot :close />
+        </div>
+    </Transition>
+
+    <ModalComponent v-if="child" :is="child" />
+</template>
+
+<script setup lang="ts">
+import { useModal } from '@noeldemartin/vue-modals/composition';
+
+const { child, visible, close, remove } = useModal({ removeOnClose: false });
+</script>
+```
+
+However, keep in mind that if you're going to work with modals this way, you'll need to implement all the accessibility functionality on your own (focus trapping, keyboard events, etc.).
+
+Instead, you'll probably want to integrate with an existing component library.
 
 ### Third-party integrations
 
 In order to use this with component libraries, you'll need to follow similar techniques from the ones described in the previous section.
 
-These are some of the built-in integrations, feel free to look at the [src/integrations/](./src/integrations/) folder to learn more about them.
+There are some built-in integrations, but feel free to look at the [src/integrations/](./src/integrations/) folder to learn more.
 
 #### PrimeVue
 
@@ -158,45 +184,31 @@ import { Modal } from '@noeldemartin/vue-modals/primevue';
 
 #### Shadcn
 
-Following Shadcn's philosophy, this library doesn't contain any code to integrate with the library. Instead, you'll want to copy & paste these into your project:
+Following Shadcn's philosophy, this library doesn't export any code to integrate with the library. Instead, you'll want to copy & paste these into your project:
 
 `src/components/ui/modal/Modal.vue`
 
 ```vue
 <template>
-    <Dialog :open="modal.visible.value" @update:open="updateOpenState($event)">
+    <Dialog :open="modal.visible.value" @update:open="$event || close()">
         <DialogContent>
             <slot />
 
-            <ModalContext v-if="modal.child.value" :controller="modal.child.value">
-                <component
-                    :is="modal.child.value.component"
-                    v-bind="modal.child.value.props"
-                    @close="modal.child.value.close($event)"
-                />
-            </ModalContext>
+            <ModalComponent v-if="child" :is="child" />
         </DialogContent>
     </Dialog>
 </template>
 
 <script setup lang="ts">
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useModal, ModalContext } from '@noeldemartin/vue-modals';
+import { useModal, ModalComponent } from '@noeldemartin/vue-modals';
 
-const modal = useModal({ controlled: true });
+const { child, ...modal } = useModal({ removeOnClose: false });
 
-async function updateOpenState(open: boolean) {
-    if (open) {
-        return;
-    }
-
+function close() {
     modal.close();
-    modal.visible.value = false;
-    modal.onHide();
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    modal.onAfterHide();
+    setTimeout(() => modal.remove(), 1000);
 }
 </script>
 ```

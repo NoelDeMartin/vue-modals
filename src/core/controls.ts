@@ -1,4 +1,4 @@
-import { ref, shallowRef } from 'vue';
+import { ref, shallowRef, watch } from 'vue';
 import { type ModalController, modals } from '@noeldemartin/vue-modals/state';
 import { type Constructor, type IsAny, type Pretty, PromisedValue, isObject, uuid } from '@noeldemartin/utils';
 import type { Component } from 'vue';
@@ -31,13 +31,14 @@ export function showModal<T extends Component>(
 ): Promise<GetModalResponse<T>> {
     const id = uuid();
     const props = componentProps ?? {};
-    const controlled = ref(false);
     const visible = ref(false);
+    const removeOnClose = ref(true);
     const child = shallowRef<ModalController | null>(null);
-    const promisedHidden = new PromisedValue<void>();
     const promisedResult = new PromisedValue<GetModalResponse<T>>();
+    const watchingVisible = watch(visible, (newVisible) => newVisible || close());
 
     const close = async (result?: unknown) => {
+        watchingVisible.stop();
         visible.value = false;
 
         if (isObject(result)) {
@@ -48,27 +49,20 @@ export function showModal<T extends Component>(
             promisedResult.resolve({ dismissed: true } as GetModalResponse<T>);
         }
 
-        if (!controlled.value) {
-            onHide();
-            onAfterHide();
+        if (removeOnClose.value) {
+            remove();
         }
-
-        await promisedHidden;
     };
 
-    const onHide = async () => {
-        promisedHidden.resolve();
-    };
-
-    const onAfterHide = async () => {
-        if (!promisedResult.isResolved()) {
-            await close();
-        }
-
+    const remove = () => {
         const index = modals.value.findIndex((modal) => modal.id === id);
 
-        if (index !== -1) {
+        if (index === -1) {
             return;
+        }
+
+        if (modals.value[index]?.visible.value) {
+            modals.value[index]?.close();
         }
 
         const parentModal = modals.value[index - 1];
@@ -84,12 +78,11 @@ export function showModal<T extends Component>(
         id,
         component,
         props,
-        controlled,
+        removeOnClose,
         visible,
         child,
         close,
-        onHide,
-        onAfterHide,
+        remove,
     } satisfies ModalController;
 
     const topModal = modals.value[modals.value.length - 1];
