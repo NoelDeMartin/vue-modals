@@ -1,6 +1,6 @@
 {
     "name": "@noeldemartin/vue-modals",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "type": "module",
     "sideEffects": false,
     "exports": {
@@ -31,7 +31,7 @@
         "vue": "*"
     },
     "dependencies": {
-        "@noeldemartin/utils": "next"
+        "@noeldemartin/utils": "^0.7.2"
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.2",

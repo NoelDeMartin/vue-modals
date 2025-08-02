@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@noeldemartin/utils':
-        specifier: next
-        version: 0.7.1-next.5f7bc66cad4aaa2dce4a2314e99d562ff3ab993b
+        specifier: ^0.7.2
+        version: 0.7.2
     devDependencies:
       '@arethetypeswrong/cli':
         specifier: ^0.18.2
@@ -395,8 +395,8 @@ packages:
   '@noeldemartin/utils@0.7.0-next.928e77e4d67adf7b9e4e1c5387f321ecfe3b11ca':
     resolution: {integrity: sha512-rP/sbx+ifnKVJpLhmok0uYvuWEerPzm2onN8l+VYrPkGPMqsFSPUsKSbID9PMVYbIQ52CZFekijIvF5Fkc/42Q==}
 
-  '@noeldemartin/utils@0.7.1-next.5f7bc66cad4aaa2dce4a2314e99d562ff3ab993b':
-    resolution: {integrity: sha512-+FFPIXeJIZugQje7A+JLdlBuBLfXjKWCAh7fm1XHYa/sF9EvL3FSEl8bESwg8hrIhG5GkZpVitB+zGxkLCbhag==}
+  '@noeldemartin/utils@0.7.2':
+    resolution: {integrity: sha512-82ndMnqKRXbaIKUwNfY2x1K3fdUsgGwLEGyIP+rVlXgkJawnTZ3RUlo5Pfy9HvU3IBlt57GcqKbC93OHMPWmTQ==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -2330,7 +2330,7 @@ snapshots:
     dependencies:
       idb: 8.0.3
 
-  '@noeldemartin/utils@0.7.1-next.5f7bc66cad4aaa2dce4a2314e99d562ff3ab993b':
+  '@noeldemartin/utils@0.7.2':
     dependencies:
       idb: 8.0.3
 
