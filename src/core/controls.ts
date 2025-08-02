@@ -14,7 +14,7 @@ import type { Component } from 'vue';
 
 export type GetModalProps<T extends Component> = T extends Constructor<{ $props: infer TProps }> ? TProps : object;
 export type GetModalResponse<T extends Component> =
-    T extends Constructor<{ $emit: (event: 'close', args: infer TResponse) => void }>
+    T extends Constructor<{ $emit?: (event: 'close', args: infer TResponse) => void }>
         ? IsAny<TResponse> extends true
             ? { dismissed: boolean }
             : IsPlainObject<TResponse> extends true
