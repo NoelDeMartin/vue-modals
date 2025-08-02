@@ -4,18 +4,24 @@ import type { ModalController } from '@noeldemartin/vue-modals/state';
 
 const modalSymbol = Symbol();
 
-export function provideModal<T extends object = never>(controller: Ref<ModalController<T>>): void {
+export function injectModal<T = never>(): Ref<ModalController<T>> {
+    return (
+        inject(modalSymbol) ??
+        fail(
+            'Could not inject modal controller, ' +
+                'are you calling injectModal() or useModal() outside of a modal component?',
+        )
+    );
+}
+
+export function provideModal<T = never>(controller: Ref<ModalController<T>>): void {
     provide(modalSymbol, controller);
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function useModal<T extends object = never>(options?: { removeOnClose?: boolean }) {
+export function useModal<T = never>(options?: { removeOnClose?: boolean }) {
     let mounted = false;
-    const modal =
-        inject<Ref<ModalController<T>>>(modalSymbol) ??
-        fail<Ref<ModalController<T>>>(
-            'Could not resolve modal controller, useModal() should only be called within a modal component.',
-        );
+    const modal = injectModal<T>();
 
     if (options?.removeOnClose !== undefined) {
         watch(

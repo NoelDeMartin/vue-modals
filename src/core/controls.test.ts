@@ -18,6 +18,12 @@ describe('controls', () => {
               >
             | Expect<
                   Equals<
+                      GetModalResponse<Constructor<{ $emit: (event: 'close', payload: [string, number]) => void }>>,
+                      { dismissed: false; response: [string, number] } | { dismissed: true; response?: undefined }
+                  >
+              >
+            | Expect<
+                  Equals<
                       GetModalResponse<Constructor<{ $emit: (event: 'close', payload: { answer: string }) => void }>>,
                       { dismissed: false; answer: string } | { dismissed: true; answer?: undefined }
                   >
