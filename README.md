@@ -119,7 +119,7 @@ However, if you also want to configure some animations, you can use the `<Modal>
 </Modal>
 ```
 
-Finally, if you want to create your own modal wrapper, you can use `useModal()`. This will expose a couple of utilities you can use to work with the modal. By default, modals are removed from the down when closed, but you can pass the `{ removeOnClose: false }` option to disable it. If you do, make sure to call `remove()` to remove it yourself. Combined with `visible`, and using the native `<Transition>`, you can achieve the same result as the `<Modal>` component to customize it on your own:
+Finally, if you want to create your own modal wrapper, you can use `useModal()`. This will expose a couple of utilities you can use to work with the modal. By default, modals are removed from the DOM when closed, but you can pass the `{ removeOnClose: false }` option to disable it. If you do, make sure to call `remove()` to remove it yourself. Combined with `visible`, and using the native `<Transition>`, you can achieve the same result as the `<Modal>` component to customize it on your own:
 
 ```vue
 <template>
