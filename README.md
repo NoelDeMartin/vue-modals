@@ -227,7 +227,7 @@ import { ModalsPortal } from '@noeldemartin/vue-modals';
 </script>
 ```
 
-`src/components/ui/index.ts`
+`src/components/ui/modal/index.ts`
 
 ```ts
 export { default as Modal } from './Modal.vue';
