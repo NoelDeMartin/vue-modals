@@ -6,4 +6,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [v0.1.0](https://github.com/NoelDeMartin/vue-modals/releases/tag/v0.1.0) - 2025-08-02
 
-- First version.
+- First version, read more about it in this blog post: [The Problems With Modals, and How to Solve Them](https://noeldemartin.com/blog/the-problems-with-modals-and-how-to-solve-them).

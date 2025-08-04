@@ -8,6 +8,8 @@ The missing library to do Vue Modals right:
 - 🧙 Full TypeScript support.
 - 📦 Tiny library with zero dependencies.
 
+To learn more, read this blog post: [The Problems With Modals, and How to Solve Them](https://noeldemartin.com/blog/the-problems-with-modals-and-how-to-solve-them).
+
 ## Installation
 
 First, install it using your favorite package manager:
@@ -34,7 +36,7 @@ The second argument in the `showModal` function will be passed as component prop
 ```vue
 <template>
     <Modal>
-        <button @click="$emit('close', 'The Answer')">Close</button>
+        <button @click="$emit('close', { answer: 'The Answer' })">Close</button>
     </Modal>
 </template>
 
