@@ -210,7 +210,7 @@ const { child, ...modal } = useModal({ removeOnClose: false });
 function close() {
     modal.close();
 
-    setTimeout(() => modal.remove(), 1000);
+    setTimeout(() => modal.remove(), 300);
 }
 </script>
 ```
