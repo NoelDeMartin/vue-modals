@@ -131,7 +131,7 @@ Finally, if you want to create your own modal wrapper, you can use `useModal()`.
 </template>
 
 <script setup lang="ts">
-import { useModal } from '@noeldemartin/vue-modals/composition';
+import { useModal } from '@noeldemartin/vue-modals';
 
 const { visible, close, remove } = useModal({ removeOnClose: false });
 </script>
@@ -151,7 +151,7 @@ You can also use `child` if you want to render nested modals using the `<ModalCo
 </template>
 
 <script setup lang="ts">
-import { useModal } from '@noeldemartin/vue-modals/composition';
+import { useModal } from '@noeldemartin/vue-modals';
 
 const { child, visible, close, remove } = useModal({ removeOnClose: false });
 </script>
