@@ -45,6 +45,9 @@ importers:
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
+      prettier:
+        specifier: ^3.7.1
+        version: 3.7.1
       prettier-eslint-cli:
         specifier: ^8.0.1
         version: 8.0.1(prettier-eslint@16.4.2(typescript@5.9.3))(typescript@5.9.3)
