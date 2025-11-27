@@ -27,6 +27,7 @@
         "test:ci": "vitest --run --reporter verbose",
         "verify": "noeldemartin-verify"
     },
+    "packageManager": "pnpm@10.20.0",
     "peerDependencies": {
         "vue": "*"
     },
