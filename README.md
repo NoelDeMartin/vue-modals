@@ -31,6 +31,9 @@ const { answer } = await showModal(MyModal, { question: 'How many golf balls fit
 
 ## Usage
 
+> [!NOTE]
+> You can take this for a spin in the [vue-modals-sandbox](https://github.com/NoelDeMartin/vue-modals-sandbox), a bare bones Vue application with Shadcn and this library.
+
 The second argument in the `showModal` function will be passed as component properties, and modals can be closed by emitting a `close` event (the payload of which will be returned in a promise). You can take advantage of Vue's TypeScript features to type both:
 
 ```vue
@@ -192,7 +195,7 @@ Following Shadcn's philosophy, this library doesn't export any code to integrate
 
 ```vue
 <template>
-    <Dialog :open="modal.visible.value" @update:open="$event || close()">
+    <Dialog :open="visible" @update:open="$event || close()">
         <DialogContent>
             <slot />
 
@@ -203,15 +206,10 @@ Following Shadcn's philosophy, this library doesn't export any code to integrate
 
 <script setup lang="ts">
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useModal, ModalComponent } from '@noeldemartin/vue-modals';
+import { ModalComponent } from '@noeldemartin/vue-modals';
+import { useModal } from './utils';
 
-const { child, ...modal } = useModal({ removeOnClose: false });
-
-function close() {
-    modal.close();
-
-    setTimeout(() => modal.remove(), 300);
-}
+const { child, visible, close } = useModal();
 </script>
 ```
 
@@ -227,9 +225,29 @@ import { ModalsPortal } from '@noeldemartin/vue-modals';
 </script>
 ```
 
+`src/components/ui/modal/utils.ts`
+
+```ts
+import { useModal as _useModal } from '@noeldemartin/vue-modals';
+
+export function useModal<T = never>() {
+    const modal = _useModal<T>({ removeOnClose: false });
+
+    return {
+        ...modal,
+        close(payload?: T) {
+            modal.close(payload);
+
+            setTimeout(() => modal.remove(), 300);
+        },
+    };
+}
+```
+
 `src/components/ui/modal/index.ts`
 
 ```ts
+export * from './utils';
 export { default as Modal } from './Modal.vue';
 export { default as ModalsPortal } from './ModalsPortal.vue';
 ```
