@@ -23,7 +23,7 @@ importers:
         version: 0.0.0-next.9009de79669fb62b5da1a04e4c7fccc3e4310fca(eslint@8.57.1)(typescript@5.9.3)
       '@noeldemartin/scripts':
         specifier: next
-        version: 0.3.0-next.59f1588a19bfbbb3b35696e0f325658e903cb4a2(prettier-eslint@16.4.2(typescript@5.9.3))(typescript@5.9.3)
+        version: 0.3.0-next.c5a78570a4a30dd812ac84a3af8af8f094470af0(prettier-eslint@16.4.2(typescript@5.9.3))(typescript@5.9.3)
       '@noeldemartin/testing':
         specifier: next
         version: 0.0.0-next.3aa03a51f580a9508bbc982c55eda4fd2b302f35(vitest@3.2.4(@types/node@24.10.1))
@@ -386,8 +386,8 @@ packages:
     resolution: {integrity: sha512-OB0CeTgLM3wN3a66qHD97NsVCLKCmgilYbGl+ZzpTjavtmciL5kTQm7HKVHzfarH0s4D5fIK2OM4arRP8Nu8fw==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
 
-  '@noeldemartin/scripts@0.3.0-next.59f1588a19bfbbb3b35696e0f325658e903cb4a2':
-    resolution: {integrity: sha512-f/KnFTvMGIpT+PONZmsjLwx5YIX10JjD7v/cpuOirSY3otNMHuzfM4sH7FkDqavgeh+f6pNgGZe9COcQdN8pzA==}
+  '@noeldemartin/scripts@0.3.0-next.c5a78570a4a30dd812ac84a3af8af8f094470af0':
+    resolution: {integrity: sha512-oflZ+jkQVmfF3vyYJ8EVIMeOiV24iM8gEF4d6OmLU6X5RBLoGn13S41nSJXNlNKxLiFyKC98TJKiM1ALHbuosQ==}
     hasBin: true
 
   '@noeldemartin/testing@0.0.0-next.3aa03a51f580a9508bbc982c55eda4fd2b302f35':
@@ -2342,7 +2342,7 @@ snapshots:
 
   '@noeldemartin/faker@7.6.0': {}
 
-  '@noeldemartin/scripts@0.3.0-next.59f1588a19bfbbb3b35696e0f325658e903cb4a2(prettier-eslint@16.4.2(typescript@5.9.3))(typescript@5.9.3)':
+  '@noeldemartin/scripts@0.3.0-next.c5a78570a4a30dd812ac84a3af8af8f094470af0(prettier-eslint@16.4.2(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
       '@arethetypeswrong/cli': 0.17.4
       eslint: 8.57.1
