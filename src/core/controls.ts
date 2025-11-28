@@ -34,8 +34,6 @@ export function createModal<T extends Component>(
     props: GetModalProps<T>
 ): ModalController<GetModalResponse<T>>;
 
-export function createModal(component: Component, props?: Record<string, unknown>): ModalController;
-
 export function createModal<T extends Component>(
     component: T,
     componentProps?: GetModalProps<T>,
@@ -108,8 +106,6 @@ export function showModal<T extends Component>(
     props: GetModalProps<T>
 ): Promise<GetModalResponse<T>>;
 
-export function showModal(component: Component, props?: Record<string, unknown>): Promise<never>;
-
 export function showModal<T extends ModalController>(component: ModalController<T>): Promise<T>;
 
 export function showModal<T extends Component>(
@@ -117,7 +113,10 @@ export function showModal<T extends Component>(
     componentProps?: GetModalProps<T>,
 ): Promise<GetModalResponse<T>> {
     const modal =
-        'removeOnClose' in componentOrModal ? componentOrModal : createModal(componentOrModal, componentProps ?? {});
+        'removeOnClose' in componentOrModal
+            ? componentOrModal
+            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (createModal<any>(componentOrModal, (componentProps ?? {}) as GetModalProps<T>) as ModalController);
     const topModal = modals.value[modals.value.length - 1];
 
     if (topModal) {
