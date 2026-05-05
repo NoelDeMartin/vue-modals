@@ -7,6 +7,7 @@ export interface ModalController<T = never> {
     props: Record<string, unknown>;
     visible: Ref<boolean>;
     removeOnClose: Ref<boolean>;
+    removeOnCloseAfterDelay: Ref<number | null>;
     child: Ref<ModalController | null>;
     promisedResult: Promise<T>;
     close(payload?: T): Promise<void>;

@@ -19,15 +19,16 @@ export function provideModal<T = never>(controller: Ref<ModalController<T>>): vo
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function useModal<T = never>(options?: { removeOnClose?: boolean }) {
+export function useModal<T = never>(options?: { removeOnClose?: boolean; removeOnCloseAfterDelay?: number }) {
     let mounted = false;
     const modal = injectModal<T>();
 
-    if (options?.removeOnClose !== undefined) {
+    if (typeof options?.removeOnClose !== undefined || typeof options?.removeOnCloseAfterDelay !== undefined) {
         watch(
             modal,
             (newModal, oldModal) => {
-                newModal.removeOnClose.value = !!options?.removeOnClose;
+                newModal.removeOnClose.value = options?.removeOnClose ?? true;
+                newModal.removeOnCloseAfterDelay.value = options?.removeOnCloseAfterDelay ?? null;
                 newModal.visible.value = mounted;
 
                 if (!oldModal || !mounted) {

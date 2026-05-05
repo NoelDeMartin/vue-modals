@@ -42,6 +42,7 @@ export function createModal<T extends Component>(
     const props = componentProps ?? {};
     const visible = ref(false);
     const removeOnClose = ref(true);
+    const removeOnCloseAfterDelay = ref<number | null>(null);
     const child = shallowRef<ModalController | null>(null);
     const promisedResult = new PromisedValue<GetModalResponse<T>>();
     const watchingVisible = watch(visible, (newVisible) => newVisible || close());
@@ -59,6 +60,10 @@ export function createModal<T extends Component>(
         }
 
         if (removeOnClose.value) {
+            if (removeOnCloseAfterDelay.value) {
+                await after(removeOnCloseAfterDelay.value);
+            }
+
             remove();
         }
     };
@@ -88,6 +93,7 @@ export function createModal<T extends Component>(
         component,
         props,
         removeOnClose,
+        removeOnCloseAfterDelay,
         visible,
         child,
         close,
