@@ -1,40 +1,39 @@
 name: CI
 
-on: [push, pull_request]
+on:
+    pull_request:
+    push:
+        branches:
+            - main
 
-permissions:
-    id-token: write
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
-    tests:
+    ci:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: pnpm/action-setup@v4
+            - uses: actions/checkout@v7
+            - uses: voidzero-dev/setup-vp@v1.21.1
               with:
-                  run_install: false
-            - uses: actions/setup-node@v4
-              with:
-                  node-version-file: '.nvmrc'
-                  cache: 'pnpm'
-            - run: pnpm install
-            - run: pnpm build
-            - run: pnpm lint
-            - run: pnpm test:ci
-            - run: pnpm verify
+                  node-version-file: '.node-version'
+                  cache: true
+            - run: vp check
+            - run: vp run type-check
+            - run: vp test --reporter verbose
+            - run: vp pack
     publish:
         if: github.ref == 'refs/heads/main'
-        needs: tests
+        needs: ci
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
         steps:
-            - uses: actions/checkout@v4
-            - uses: pnpm/action-setup@v4
+            - uses: actions/checkout@v7
+            - uses: voidzero-dev/setup-vp@v1.21.1
               with:
-                  run_install: false
-            - uses: actions/setup-node@v4
-              with:
-                  node-version-file: '.nvmrc'
-                  registry-url: 'https://registry.npmjs.org'
-                  cache: 'pnpm'
-            - run: pnpm install
-            - run: npx noeldemartin-publish-package
+                  node-version-file: '.node-version'
+                  cache: true
+            - run: vp exec noeldemartin-publish-package

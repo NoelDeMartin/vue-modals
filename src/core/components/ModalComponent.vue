@@ -4,8 +4,8 @@
 
 <script setup lang="ts" generic="T = never">
 import { provideModal } from '@noeldemartin/vue-modals/composition';
-import { computed, shallowRef, unref, watch } from 'vue';
 import type { ModalController } from '@noeldemartin/vue-modals/state';
+import { computed, shallowRef, unref, watch } from 'vue';
 
 const { is: modal } = defineProps<{ is: ModalController<T> }>();
 const modalRef = shallowRef(modal);
@@ -22,6 +22,6 @@ const modalProps = computed(() => {
 provideModal(modalRef);
 watch(
     () => modal,
-    () => void (modalRef.value = modal)
+    () => void (modalRef.value = modal),
 );
 </script>

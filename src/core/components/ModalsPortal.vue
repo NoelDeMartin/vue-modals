@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import { modals } from '@noeldemartin/vue-modals/state';
+
 import ModalComponent from './ModalComponent.vue';
 
 const { nested = false } = defineProps<{ nested?: boolean }>();

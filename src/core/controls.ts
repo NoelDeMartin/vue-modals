@@ -1,5 +1,3 @@
-import { ref, shallowRef, watch } from 'vue';
-import { type ModalController, modals } from '@noeldemartin/vue-modals/state';
 import {
     type Constructor,
     type IsAny,
@@ -10,6 +8,8 @@ import {
     isPlainObject,
     uuid,
 } from '@noeldemartin/utils';
+import { type ModalController, modals } from '@noeldemartin/vue-modals/state';
+import { ref, shallowRef, watch } from 'vue';
 import type { Component } from 'vue';
 
 export type GetModalProps<T extends Component> = T extends Constructor<{ $props: infer TProps }> ? TProps : object;
@@ -26,12 +26,12 @@ export type GetModalResponse<T extends Component> =
 
 export function createModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? T : never,
-    props?: GetModalProps<T>
+    props?: GetModalProps<T>,
 ): ModalController<GetModalResponse<T>>;
 
 export function createModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? never : T,
-    props: GetModalProps<T>
+    props: GetModalProps<T>,
 ): ModalController<GetModalResponse<T>>;
 
 export function createModal<T extends Component>(
@@ -76,6 +76,7 @@ export function createModal<T extends Component>(
         }
 
         if (modals.value[index]?.visible.value) {
+            // oxlint-disable-next-line typescript/no-floating-promises
             modals.value[index]?.close();
         }
 
@@ -104,12 +105,12 @@ export function createModal<T extends Component>(
 
 export function showModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? T : never,
-    props?: GetModalProps<T>
+    props?: GetModalProps<T>,
 ): Promise<GetModalResponse<T>>;
 
 export function showModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? never : T,
-    props: GetModalProps<T>
+    props: GetModalProps<T>,
 ): Promise<GetModalResponse<T>>;
 
 export function showModal<T extends ModalController>(component: ModalController<T>): Promise<T>;
@@ -121,8 +122,8 @@ export function showModal<T extends Component>(
     const modal =
         'removeOnClose' in componentOrModal
             ? componentOrModal
-            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (createModal<any>(componentOrModal, (componentProps ?? {}) as GetModalProps<T>) as ModalController);
+            : // oxlint-disable-next-line typescript/no-explicit-any
+              (createModal<any>(componentOrModal, (componentProps ?? {}) as GetModalProps<T>) as ModalController);
     const topModal = modals.value[modals.value.length - 1];
 
     if (topModal) {
@@ -141,6 +142,7 @@ export async function closeModal(id: string, options: { remove?: boolean; remove
         return;
     }
 
+    // oxlint-disable-next-line typescript/no-floating-promises
     modal.close();
 
     if (options.remove) {

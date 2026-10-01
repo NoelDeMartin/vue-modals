@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import Dialog from 'primevue/dialog';
 import { useModal } from '@noeldemartin/vue-modals';
+import Dialog from 'primevue/dialog';
 
 const { visible, close, remove } = useModal({ removeOnClose: false });
 </script>

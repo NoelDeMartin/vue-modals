@@ -5,7 +5,6 @@
         "isolatedModules": true,
         "noUncheckedIndexedAccess": true,
         "noImplicitOverride": true,
-        "baseUrl": ".",
         "paths": {
             "@noeldemartin/vue-modals": ["./src/core"],
             "@noeldemartin/vue-modals/*": ["./src/core/*"]

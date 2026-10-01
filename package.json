@@ -1,6 +1,16 @@
 {
     "name": "@noeldemartin/vue-modals",
     "version": "0.1.1",
+    "license": "MIT",
+    "author": "Noel De Martin",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NoelDeMartin/vue-modals.git"
+    },
+    "files": [
+        "src",
+        "dist"
+    ],
     "type": "module",
     "sideEffects": false,
     "exports": {
@@ -13,56 +23,39 @@
             "default": "./dist/primevue.js"
         }
     },
-    "files": [
-        "src",
-        "dist"
-    ],
-    "license": "MIT",
-    "author": "Noel De Martin",
-    "repository": "github:NoelDeMartin/vue-modals",
     "scripts": {
-        "build": "vite build",
-        "lint": "noeldemartin-lint src",
-        "test": "vitest --run",
-        "test:ci": "vitest --run --reporter verbose",
-        "verify": "noeldemartin-verify"
-    },
-    "packageManager": "pnpm@10.20.0",
-    "peerDependencies": {
-        "vue": "*"
+        "build": "vp pack",
+        "test": "vp test",
+        "type-check": "vue-tsc --noEmit"
     },
     "dependencies": {
         "@noeldemartin/utils": "^0.7.2"
     },
     "devDependencies": {
-        "@arethetypeswrong/cli": "^0.18.2",
-        "@noeldemartin/eslint-config-typescript": "next",
-        "@noeldemartin/eslint-plugin": "next",
+        "@arethetypeswrong/core": "^0.18.5",
         "@noeldemartin/scripts": "next",
         "@noeldemartin/testing": "next",
         "@total-typescript/ts-reset": "^0.6.1",
-        "@types/node": "^24.0.13",
-        "@typescript-eslint/eslint-plugin": "^5.6.0",
+        "@types/node": "^26.6.3",
         "@vitejs/plugin-vue": "^6.0.0",
-        "@vue/tsconfig": "^0.7.0",
-        "eslint": "^8.57.1",
-        "prettier": "^3.7.1",
-        "prettier-eslint-cli": "^8.0.1",
+        "@vue/tsconfig": "^0.9.1",
         "primevue": "^4.3.6",
-        "publint": "^0.3.12",
-        "typescript": "^5.8.3",
-        "vite": "^7.0.4",
-        "vite-plugin-dts": "^4.5.4",
-        "vitest": "^3.2.4",
+        "publint": "^0.3.24",
+        "typescript": "~6.0.2",
+        "unplugin-vue": "^8.0.0",
+        "vite": "catalog:",
+        "vite-plus": "catalog:",
         "vue": "^3.5.17",
-        "vue-tsc": "^3.0.2"
+        "vue-tsc": "^3.3.11"
     },
-    "eslintConfig": {
-        "extends": [
-            "@noeldemartin/eslint-config-typescript"
-        ]
+    "peerDependencies": {
+        "primevue": "^4.0.0",
+        "vue": "*"
     },
-    "prettier": {
-        "printWidth": 120
-    }
+    "peerDependenciesMeta": {
+        "primevue": {
+            "optional": true
+        }
+    },
+    "packageManager": "pnpm@11.5.2"
 }

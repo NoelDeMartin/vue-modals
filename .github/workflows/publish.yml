@@ -3,22 +3,16 @@ name: Publish package
 on:
     workflow_dispatch:
 
-permissions:
-    id-token: write
-
 jobs:
     publish:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
         steps:
-            - uses: actions/checkout@v4
-            - uses: pnpm/action-setup@v4
+            - uses: actions/checkout@v7
+            - uses: voidzero-dev/setup-vp@v1.21.1
               with:
-                  run_install: false
-            - uses: actions/setup-node@v4
-              with:
-                  node-version-file: '.nvmrc'
-                  registry-url: 'https://registry.npmjs.org'
-                  cache: 'pnpm'
-            - run: pnpm install --frozen-lockfile
-            - run: pnpm build
-            - run: npx noeldemartin-publish-package --latest
+                  node-version-file: '.node-version'
+                  cache: true
+            - run: vp exec noeldemartin-publish-package --latest
