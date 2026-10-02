@@ -190,7 +190,7 @@ importers:
         version: 0.0.0-next.efcf69ca2517743b2374dd60ba2ffe8a8d87ce40(vitest@5.0.1)
       '@noeldemartin/vite-plus-config':
         specifier: next
-        version: 0.0.0-next.bed1e6a52ed597e6b7948edabadd1e0d3918f0fb(vite-plus@1.0.0(@arethetypeswrong/core@0.18.5)(@types/node@26.6.3)(@vitest/ui@5.0.1)(publint@0.3.24)(typescript@6.0.3))
+        version: 0.0.0-next.06ddc05cacd1d1a1ad56081e99bc9378e3f8dc6c(vite-plus@1.0.0(@arethetypeswrong/core@0.18.5)(@types/node@26.6.3)(@vitest/ui@5.0.1)(publint@0.3.24)(typescript@6.0.3))
       '@total-typescript/ts-reset':
         specifier: ^0.6.1
         version: 0.6.1
@@ -307,11 +307,11 @@ packages:
   '@noeldemartin/utils@0.7.2':
     resolution: {integrity: sha512-82ndMnqKRXbaIKUwNfY2x1K3fdUsgGwLEGyIP+rVlXgkJawnTZ3RUlo5Pfy9HvU3IBlt57GcqKbC93OHMPWmTQ==}
 
-  '@noeldemartin/utils@0.7.3-next.e7bb6180243f65a63fff78fd0451e26155356359':
-    resolution: {integrity: sha512-kGdPset5qQ1Zp+9EghbLxbMOdfSdGUtPkyAlCDDhYeeWIjXO9l3BEitOARMHE+IpfkgPouYEp4kJT/+YzhOA5w==}
+  '@noeldemartin/utils@0.7.3-next.06f5fc5dd2d541f993296ffca3b64a7ad51519a8':
+    resolution: {integrity: sha512-ssd1Ls+p1YxjfTt1re4/yysWNPlx12ryxQEpHWXYvejbDVlPBjCK3XZLIEiYhiVASN4vXqLJCxEGEe0+KMIZmw==}
 
-  '@noeldemartin/vite-plus-config@0.0.0-next.bed1e6a52ed597e6b7948edabadd1e0d3918f0fb':
-    resolution: {integrity: sha512-DgkuILS8tziYYFwTN0aWt2mi0JkQXvJKys/Ot8RBCGZ5JIvRqoZ4wER9WOyJGhmbh7zopcsjUdvj/8d7RBozfw==}
+  '@noeldemartin/vite-plus-config@0.0.0-next.06ddc05cacd1d1a1ad56081e99bc9378e3f8dc6c':
+    resolution: {integrity: sha512-Oax98GVyV34IqcDROnRS2S0G+uY/edzHN/v0ucZEb1pZw+FwOacb8cX9jx8vViuoVoIsaCwOUiw5J6LsdBcXDQ==}
     peerDependencies:
       vite-plus: '>=1.0.0'
 
@@ -1680,18 +1680,18 @@ snapshots:
   '@noeldemartin/testing@0.0.0-next.efcf69ca2517743b2374dd60ba2ffe8a8d87ce40(vitest@5.0.1)':
     dependencies:
       '@noeldemartin/faker': 7.6.0
-      '@noeldemartin/utils': 0.7.3-next.e7bb6180243f65a63fff78fd0451e26155356359
+      '@noeldemartin/utils': 0.7.3-next.06f5fc5dd2d541f993296ffca3b64a7ad51519a8
       vitest: 5.0.1(@types/node@26.6.3)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0(@arethetypeswrong/core@0.18.5)(@types/node@26.6.3)(publint@0.3.24)(typescript@6.0.3))
 
   '@noeldemartin/utils@0.7.2':
     dependencies:
       idb: 8.0.3
 
-  '@noeldemartin/utils@0.7.3-next.e7bb6180243f65a63fff78fd0451e26155356359':
+  '@noeldemartin/utils@0.7.3-next.06f5fc5dd2d541f993296ffca3b64a7ad51519a8':
     dependencies:
       idb: 8.0.3
 
-  '@noeldemartin/vite-plus-config@0.0.0-next.bed1e6a52ed597e6b7948edabadd1e0d3918f0fb(vite-plus@1.0.0(@arethetypeswrong/core@0.18.5)(@types/node@26.6.3)(@vitest/ui@5.0.1)(publint@0.3.24)(typescript@6.0.3))':
+  '@noeldemartin/vite-plus-config@0.0.0-next.06ddc05cacd1d1a1ad56081e99bc9378e3f8dc6c(vite-plus@1.0.0(@arethetypeswrong/core@0.18.5)(@types/node@26.6.3)(@vitest/ui@5.0.1)(publint@0.3.24)(typescript@6.0.3))':
     dependencies:
       vite-plus: 1.0.0(@arethetypeswrong/core@0.18.5)(@types/node@26.6.3)(@vitest/ui@5.0.1)(publint@0.3.24)(typescript@6.0.3)
 

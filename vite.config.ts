@@ -1,22 +1,19 @@
 import { URL, fileURLToPath } from 'node:url';
 
-import { fmt, lint } from '@noeldemartin/vite-plus-config';
+import { fmt, lint, pack } from '@noeldemartin/vite-plus-config';
 import vue from '@vitejs/plugin-vue';
 import Vue from 'unplugin-vue/rolldown';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
     pack: {
+        ...pack,
         entry: {
             index: 'src/core/index.ts',
             primevue: 'src/integrations/primevue/index.ts',
         },
         plugins: [Vue({ isProduction: true })],
-        sourcemap: true,
         dts: { vue: true },
-        fixedExtension: false,
-        publint: true,
-        attw: { profile: 'esm-only' },
     },
     plugins: lazyPlugins(() => [vue()]),
     resolve: {
