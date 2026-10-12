@@ -23,21 +23,23 @@ export function useModal<T = never>(options?: { removeOnClose?: boolean; removeO
     let mounted = false;
     const modal = injectModal<T>();
 
-    watch(
-        modal,
-        (newModal, oldModal) => {
-            newModal.removeOnClose.value = options?.removeOnClose ?? true;
-            newModal.removeOnCloseAfterDelay.value = options?.removeOnCloseAfterDelay ?? null;
-            newModal.visible.value = mounted;
+    if (options?.removeOnClose !== undefined || options?.removeOnCloseAfterDelay !== undefined) {
+        watch(
+            modal,
+            (newModal, oldModal) => {
+                newModal.removeOnClose.value = options?.removeOnClose ?? true;
+                newModal.removeOnCloseAfterDelay.value = options?.removeOnCloseAfterDelay ?? null;
+                newModal.visible.value = mounted;
 
-            if (!oldModal || !mounted) {
-                return;
-            }
+                if (!oldModal || !mounted) {
+                    return;
+                }
 
-            oldModal.visible.value = false;
-        },
-        { immediate: true },
-    );
+                oldModal.visible.value = false;
+            },
+            { immediate: true },
+        );
+    }
 
     onMounted(() => ((mounted = true), (modal.value.visible.value = true)));
 
