@@ -43,6 +43,7 @@ export function useModal<T = never>(options?: { removeOnClose?: boolean; removeO
 
     return {
         id: computed(() => modal.value.id),
+        metadata: computed(() => modal.value.metadata),
         visible: computed(() => modal.value.visible.value),
         child: computed(() => modal.value.child.value),
         close: (payload?: T): Promise<void> => modal.value.close(payload),

@@ -8,7 +8,7 @@ import {
     isPlainObject,
     uuid,
 } from '@noeldemartin/utils';
-import { type ModalController, modals } from '@noeldemartin/vue-modals/state';
+import { type ModalController, type ModalMetadata, modals } from '@noeldemartin/vue-modals/state';
 import { ref, shallowRef, watch } from 'vue';
 import type { Component } from 'vue';
 
@@ -24,22 +24,30 @@ export type GetModalResponse<T extends Component> =
               : { dismissed: false; response: TResponse } | { dismissed: true; response?: undefined }
         : { dismissed: boolean };
 
+export interface ModalOptions {
+    metadata?: ModalMetadata;
+}
+
 export function createModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? T : never,
     props?: GetModalProps<T>,
+    options?: ModalOptions,
 ): ModalController<GetModalResponse<T>>;
 
 export function createModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? never : T,
     props: GetModalProps<T>,
+    options?: ModalOptions,
 ): ModalController<GetModalResponse<T>>;
 
 export function createModal<T extends Component>(
     component: T,
     componentProps?: GetModalProps<T>,
+    options: ModalOptions = {},
 ): ModalController<GetModalResponse<T>> {
     const id = uuid();
     const props = componentProps ?? {};
+    const metadata = options.metadata ?? ({} as ModalMetadata);
     const visible = ref(false);
     const removeOnClose = ref(true);
     const removeOnCloseAfterDelay = ref<number | null>(null);
@@ -93,6 +101,7 @@ export function createModal<T extends Component>(
         id,
         component,
         props,
+        metadata,
         removeOnClose,
         removeOnCloseAfterDelay,
         visible,
@@ -106,11 +115,13 @@ export function createModal<T extends Component>(
 export function showModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? T : never,
     props?: GetModalProps<T>,
+    options?: ModalOptions,
 ): Promise<GetModalResponse<T>>;
 
 export function showModal<T extends Component>(
     component: T & object extends GetModalProps<T> ? never : T,
     props: GetModalProps<T>,
+    options?: ModalOptions,
 ): Promise<GetModalResponse<T>>;
 
 export function showModal<T extends ModalController>(component: ModalController<T>): Promise<T>;
@@ -118,12 +129,17 @@ export function showModal<T extends ModalController>(component: ModalController<
 export function showModal<T extends Component>(
     componentOrModal: T | ModalController,
     componentProps?: GetModalProps<T>,
+    options?: ModalOptions,
 ): Promise<GetModalResponse<T>> {
     const modal =
         'removeOnClose' in componentOrModal
             ? componentOrModal
             : // oxlint-disable-next-line typescript/no-explicit-any
-              (createModal<any>(componentOrModal, (componentProps ?? {}) as GetModalProps<T>) as ModalController);
+              (createModal<any>(
+                  componentOrModal,
+                  (componentProps ?? {}) as GetModalProps<T>,
+                  options,
+              ) as ModalController);
     const topModal = modals.value[modals.value.length - 1];
 
     if (topModal) {
